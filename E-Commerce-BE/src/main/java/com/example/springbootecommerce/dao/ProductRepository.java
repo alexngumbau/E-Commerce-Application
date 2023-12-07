@@ -8,10 +8,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import java.util.Optional;
+
 @CrossOrigin("http://localhost:4200")
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
     Page<Product> findByCategoryId(@Param("id") Long id, Pageable pageable);
     Page<Product> findByNameContaining(@Param("name") String name, Pageable page);
-    
 }
