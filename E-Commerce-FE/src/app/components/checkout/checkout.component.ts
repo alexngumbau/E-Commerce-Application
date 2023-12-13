@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Luv2ShopFormService } from 'src/app/services/luv2-shop-form.service';
 
 @Component({
   selector: 'app-checkout',
@@ -8,13 +9,17 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class CheckoutComponent implements OnInit {
 
-
   checkoutFormGroup : FormGroup;
   totalPrice: number = 0;
   totalQuantity: number = 0;
 
+  // Properties for months and years
+  creditCardYears: number[] = [];
+  creditCardMonths: number[] = [];
+
   constructor(
-    private formBuilder : FormBuilder
+    private formBuilder : FormBuilder,
+    private luv2ShopService: Luv2ShopFormService
   ) { }
 
   ngOnInit(): void {
@@ -50,9 +55,27 @@ export class CheckoutComponent implements OnInit {
         expirationMonth: [''],
         expirationYear: [''],
       })
+    });
 
-      
-    })
+    // Populate credit card months
+    const startMonth : number = new Date().getMonth() + 1;
+    console.log("startMonth: " +startMonth);
+    
+    this.luv2ShopService.getCreditCardMonths(startMonth).subscribe(
+      data => {
+        console.log("Retrieved credit card months: " + JSON.stringify(data));
+        this.creditCardMonths = data;
+        
+      }
+    );
+    // populate credit card years
+    this.luv2ShopService.getCreditCardYears().subscribe(
+      data => {
+        console.log("Retrieving credit card years: " + JSON.stringify(data));
+        this.creditCardYears = data;
+      }
+    );
+
   }
 
   copyShippingAddressToBillingAddress(event : any) {
@@ -63,6 +86,30 @@ export class CheckoutComponent implements OnInit {
       this.checkoutFormGroup.controls['billingAddress'].reset();
     }
 
+  }
+
+  handleMonthsAndYears() {
+    const creditCadFormGroup = this.checkoutFormGroup.get('creditCard');
+
+    const currentYear: number = new Date().getFullYear();
+    const selectedYear: number = Number(creditCadFormGroup?.value.expirationYear);
+
+    // if the current year equals the selected year, then start with the current month
+
+    let startMonth: number;
+
+    if(currentYear === selectedYear) {
+      startMonth = new Date().getMonth() + 1;
+    } else {
+      startMonth = 1;
+    }
+
+    this.luv2ShopService.getCreditCardMonths(startMonth).subscribe(
+      data => {
+        console.log("Retrieved credit card months: " + JSON.stringify(data));
+        this.creditCardMonths = data;
+      }
+    );
   }
 
   onSubmit() {
