@@ -30,13 +30,10 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {
 //        RepositoryRestConfigurer.super.configureRepositoryRestConfiguration(config, cors);
         HttpMethod[] theUnSupportedActions = {HttpMethod.PUT, HttpMethod.POST, HttpMethod.DELETE};
-        // Disable Http methods for Product : PUT, POST and DELETE
+        // Disable Http methods for Product, ProductCtegory, Country and State : PUT, POST and DELETE
         disableHttpMethods(Product.class ,config, theUnSupportedActions);
-        // Disable Http methods for ProductCategory : PUT, POST and DELETE
         disableHttpMethods(ProductCategory.class ,config, theUnSupportedActions);
-        // Disable Http methods for Country : PUT, POST and DELETE
         disableHttpMethods(Country.class ,config, theUnSupportedActions);
-        // Disable Http methods for State : PUT, POST and DELETE
         disableHttpMethods(State.class ,config, theUnSupportedActions);
 
         // call an internal helper method to expose the id
