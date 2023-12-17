@@ -11,7 +11,7 @@ import { map } from 'rxjs/operators';
 export class Luv2ShopFormService {
 
   private countriesUrl = 'http://localhost:8080/api/countries';
-  private stateUrl = 'http://localhost:8080/api/states';
+  private statesUrl = 'http://localhost:8080/api/states';
   
 
   constructor(
@@ -26,7 +26,7 @@ export class Luv2ShopFormService {
 
   getStates(theCountryCode : string) : Observable<State[]> {
     // search url
-    const searchStateUrl = `${this.stateUrl}/search/findByCountryCode?code={theCountryCode}`;
+    const searchStateUrl = `${this.statesUrl}/search/findByCountryCode?code=${theCountryCode}`;
     return this.httpClient.get<GetResponseStates>(searchStateUrl).pipe(
       map(response => response._embedded.states)
     );
