@@ -35,7 +35,7 @@ public class CheckoutServiceImpl implements  CheckoutService{
         Customer customer = purchase.getCustomer();
         customer.add(order);
         // Save to the database
-    customerRepository.save(customer);
+        customerRepository.save(customer);
         // Return a response
         return new PurchaseResponse(orderTrackingNumber);
     }
