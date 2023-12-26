@@ -217,6 +217,7 @@ export class CheckoutComponent implements OnInit {
     let order = new Order();
     order.totalPrice = this.totalPrice;
     order.totlQuantity = this.totalQuantity;
+
     // get cart items
     const cartItems = this.cartService.cartItems;
 
@@ -254,7 +255,7 @@ export class CheckoutComponent implements OnInit {
 
     // populate purchase -- order and orderItems
     purchase.order = order;
-    purchase.orderItems = orderItems
+    purchase.orderItems = orderItems;
 
     // call REST API via the CheckoutService
     this.checkoutService.placeorder(purchase).subscribe({
@@ -263,7 +264,7 @@ export class CheckoutComponent implements OnInit {
           alert(`Your order has been received.\nOrder tracking number: ${response.orderTrackingNumber}`);
           
           // reset cart
-          this.reseetCart();
+          this.resetCart();
         },
 
         // error part
@@ -274,7 +275,7 @@ export class CheckoutComponent implements OnInit {
     )
   }
 
-  reseetCart() {
+  resetCart() {
     // reset cart data
     this.cartService.cartItems = [];
     this.cartService.totalPrice.next(0);
