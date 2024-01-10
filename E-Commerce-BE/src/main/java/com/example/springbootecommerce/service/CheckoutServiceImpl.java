@@ -16,24 +16,40 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class CheckoutServiceImpl implements  CheckoutService{
+
     private final CustomerRepository customerRepository;
     @Override
     @Transactional
     public PurchaseResponse placeOrder(Purchase purchase) {
+
         //Retrieve the order info from DTO
         Order order = purchase.getOrder();
+
         // Generate tracking number
         String orderTrackingNumber = generateOrderTrackingNumber();
         order.setOrderTrackingNumber(orderTrackingNumber);
+
         // Populate order with orderItems
         Set<OrderItem> orderItems = purchase.getOrderItems();
         orderItems.forEach(item -> order.add(item));
+
         // Populate order with billingAddress and shippingAddress
         order.setBillingAddress(purchase.getBillingAddress());
         order.setShippingAddress(purchase.getShippingAddress());
+
         // Populate customer with order
         Customer customer = purchase.getCustomer();
+
+        // Check if this is an existing customer
+        String theEmail = customer.getEmail();
+        Customer customerFromDB = customerRepository.findByEmail(theEmail);
+        if (customerFromDB != null) {
+            customer = customerFromDB;
+        }
+
+        // Add the order to the customer
         customer.add(order);
+
         // Save to the database
         customerRepository.save(customer);
         // Return a response
