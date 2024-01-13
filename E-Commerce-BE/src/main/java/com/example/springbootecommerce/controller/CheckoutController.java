@@ -6,6 +6,7 @@ import com.example.springbootecommerce.service.CheckoutService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/checkout")
 @RequiredArgsConstructor

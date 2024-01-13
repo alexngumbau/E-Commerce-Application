@@ -1,9 +1,6 @@
 package com.example.springbootecommerce.config;
 
-import com.example.springbootecommerce.entity.Country;
-import com.example.springbootecommerce.entity.Product;
-import com.example.springbootecommerce.entity.ProductCategory;
-import com.example.springbootecommerce.entity.State;
+import com.example.springbootecommerce.entity.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.metamodel.EntityType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +39,7 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
         disableHttpMethods(ProductCategory.class ,config, theUnSupportedActions);
         disableHttpMethods(Country.class ,config, theUnSupportedActions);
         disableHttpMethods(State.class ,config, theUnSupportedActions);
+        disableHttpMethods(Order.class ,config, theUnSupportedActions);
 
         // call an internal helper method to expose the id
         exposeIds(config);
@@ -53,8 +51,8 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
     private static void disableHttpMethods(Class theClass, RepositoryRestConfiguration config, HttpMethod[] theUnSupportedActions) {
         config.getExposureConfiguration()
                 .forDomainType(theClass)
-                .withItemExposure((metdata, httpMethods) -> httpMethods.disable(theUnSupportedActions))
-                .withCollectionExposure((metdata, httpMethods) -> httpMethods.disable(theUnSupportedActions));
+                .withItemExposure((metadata, httpMethods) -> httpMethods.disable(theUnSupportedActions))
+                .withCollectionExposure((metadata, httpMethods) -> httpMethods.disable(theUnSupportedActions));
     }
 
     private void exposeIds(RepositoryRestConfiguration config) {
