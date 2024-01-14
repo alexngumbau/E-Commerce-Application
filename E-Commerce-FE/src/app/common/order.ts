@@ -1,5 +1,5 @@
 export class Order {
-    totlQuantity:number;
+    totalQuantity:number;
     totalPrice:number;
     
 }
