@@ -48,7 +48,7 @@
                     <div class="col-md-2"> <label>Email</label></div>
                     <div class="col-md-9">
                         <div class="input-space">
-                            <input formControlName="email" type="text">
+                            <input formControlName="email" type="text" readonly>
                             <div *ngIf="email?.invalid && (email?.dirty || email?.touched)" class="alert alert-danger mt-1">
                                 <div *ngIf="email?.errors?.['required']">
                                     Email address is required
