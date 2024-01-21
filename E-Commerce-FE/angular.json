@@ -60,6 +60,15 @@
               ],
               "outputHashing": "all"
             },
+            "qa": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.qa.ts"
+                }
+              ]
+            },
+
             "development": {
               "buildOptimizer": false,
               "optimization": false,
@@ -76,6 +85,9 @@
           "configurations": {
             "production": {
               "browserTarget": "E-Commerce-FE:build:production"
+            },
+            "qa": {
+              "browserTarget": "E-Commerce-FE:build:qa"
             },
             "development": {
               "browserTarget": "E-Commerce-FE:build:development"
