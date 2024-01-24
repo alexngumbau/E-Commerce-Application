@@ -31,6 +31,7 @@ public class CheckoutController {
         String paymentStr = paymentIntent.toJson();
 
         return new ResponseEntity<>(paymentStr, HttpStatus.OK);
+
     }
 
 }
